@@ -3,7 +3,7 @@ name: Video-call socket app hosting
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
