@@ -3,6 +3,7 @@ const express = require('express');
 const http = require('http');
 const socket = require('socket.io');
 const cors = require('cors');
+const { send } = require('process');
 
 const app = express();
 const server = http.createServer(app);
@@ -26,6 +27,9 @@ io.on("connection", (socket) => {
   console.log('New client connected:', socket.id);
 
   socket.on("join room", (roomID) => {
+    socket.join(roomID);
+    console.log(`${socket.id} joined room: ${roomID}`);
+
     if (rooms[roomID]) {
       rooms[roomID].push(socket.id);
     } else {
@@ -48,6 +52,13 @@ io.on("connection", (socket) => {
 
   socket.on("ice-candidate", (incoming) => {
     io.to(incoming.target).emit("ice-candidate", incoming.candidate);
+  });
+
+  socket.on("send message", ({ text, roomID }) => {
+      // console.log(`Message received in room ${roomID}: ${text}`);
+      // Broadcast the message to everyone else in the room
+      console.log(`Broadcasting message to room ${roomID}: ${text}`);
+      socket.to(roomID).emit("receive message", {sender: socket.id, text});
   });
 
   socket.on("disconnect", () => {
