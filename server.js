@@ -14,10 +14,10 @@ app.use(cors());
 // Initialize Socket.IO with CORS configuration
 const io = socket(server, {
   cors: {
-    origin: "http://localhost:5173", // Frontend URL
-    methods: ["GET", "POST"], // Allowed HTTP methods
-    allowedHeaders: ["Content-Type"], // Allowed headers
-    credentials: true, // Allow cookies if needed
+    origin: "http://localhost:5173", 
+    methods: ["GET", "POST"], 
+    allowedHeaders: ["Content-Type"], 
+    credentials: true, 
   },
 });
 
@@ -63,7 +63,7 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     console.log('Client disconnected:', socket.id);
-    // Optionally handle cleanup for rooms
+    
     for (const room in rooms) {
       rooms[room] = rooms[room].filter((id) => id !== socket.id);
       if (rooms[room].length === 0) {
