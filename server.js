@@ -14,7 +14,7 @@ app.use(cors());
 // Initialize Socket.IO with CORS configuration
 const io = socket(server, {
   cors: {
-    origin: "http://localhost:5173", 
+    origin: "*", 
     methods: ["GET", "POST"], 
     allowedHeaders: ["Content-Type"], 
     credentials: true, 
@@ -73,6 +73,7 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(8000, () => console.log('Server is running on port 8000'));
+const port = process.env.PORT || 8000;
+server.listen(port, () => console.log(`Server is running on port ${port}`));
 
 // exports.api = functions.https.onRequest(app);
