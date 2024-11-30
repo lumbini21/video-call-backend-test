@@ -1,4 +1,4 @@
-const functions = require("firebase-functions");
+// const functions = require("firebase-functions");
 const express = require('express');
 const http = require('http');
 const socket = require('socket.io');
@@ -75,4 +75,4 @@ io.on("connection", (socket) => {
 
 server.listen(8000, () => console.log('Server is running on port 8000'));
 
-exports.api = functions.https.onRequest(app);
+// exports.api = functions.https.onRequest(app);
