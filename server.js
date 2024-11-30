@@ -55,11 +55,11 @@ io.on("connection", (socket) => {
   });
 
   socket.on("send message", ({ text, roomID }) => {
-      // console.log(`Message received in room ${roomID}: ${text}`);
-      // Broadcast the message to everyone else in the room
-      console.log(`Broadcasting message to room ${roomID}: ${text}`);
-      socket.to(roomID).emit("receive message", {sender: socket.id, text});
+      const timestamp = new Date().toISOString();
+      console.log(`Broadcasting message to room ${roomID}: ${text} at ${timestamp}`);
+      socket.to(roomID).emit("receive message", { sender: socket.id, text, timestamp });
   });
+
 
   socket.on("disconnect", () => {
     console.log('Client disconnected:', socket.id);
